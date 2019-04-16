@@ -1,0 +1,176 @@
+14.a: By making reference to OOP features, outline why it is possible for the TrainCompany
+class to have two constructors.
+
+The TrainCompany class is "constructor overloaded:" it has multiple constructors that each take different sets of parameters,
+so that a TrainCompany can be constructed with or without passing a company name and company code.
+
+
+
+14.b: Outline the consequence of having the accessor and mutator methods declared
+as protected.
+
+Protected methods can only be accessed by other classes within their current package.
+
+
+
+15.a: State the most appropriate data type for each of the three data items in the Journey class.
+
+String for routeCode, int for delay, boolean for weatherRelated
+
+
+
+15.b: Construct the constructor method for the Journey class.
+
+public Journey(int a, int b, boolean c){
+    this.routeCode = a;
+    this.delay = b;
+    this.weatherRelated = c;
+}
+
+
+
+15.c: State the output after the above code is executed.
+
+"T290"
+10
+1
+
+
+
+16.a: State the value returned by the method call allCompanies[0].averageDelay();,
+assuming that the code in question 15 has been executed.
+
+4.5
+
+
+
+16.b: Construct the method averageDelay(). You can assume that each TrainCompany
+object has at least one journey.
+
+public double averageDelay() {
+    double average = 0;
+    for(int n=0; n<this.numberOfJourneys; n++){
+        if(!journeyHistory[n].getWeatherRelated()){
+            average+=journeyHistory[n].getDelay();
+        }
+    }
+    return average/this.numberOfJourneys;
+}
+
+
+
+***17.a: Construct the UML diagram for the Codes class.
+
+ __________________________
+| Codes                    |
+| - routeName: String      |
+| - routeCode: String      |
+|__________________________|
+| + getRouteName(): String |
+| + getRouteCode(): String |
+|__________________________|
+
+
+17.b: The array allCodes[] is an unordered array of Codes objects. It contains the details
+of every route for all of the train companies. The method longestDelay()in the
+TrainCompany class returns the route name for the journey with the longest delay not
+caused by the weather.
+Construct the method longestDelay(). You can assume that all route codes are
+present in allCodes[].
+
+public String longestDelay(Codes[] c) {
+    int n;
+    int longestDelayJourney = 0;
+    for(n=0; n<this.journeyHistory.length; n++){
+        if(journeyHistory[n]==null){
+            break;
+        }else{
+            if(journeyHistory[n].getDelay()>journeyHistory[longestDelayJourney].getDelay()){
+                longestDelayJourney = n;
+            }
+        }
+    }
+
+    for(n=0; n<allCodes.length; n++){
+        if(allCodes[n].getRouteCode().equals(journeyHistory[n].getRouteCode())){
+            break;
+        }
+    }
+
+    return allCodes[n].getRouteName();
+}
+
+
+
+18: The Department of Transport wants to expand this program to include similar analysis for bus
+and airplane journeys.
+18.a: Describe how inheritance could be used to provide an organized set of classes for all of
+these forms of transport.
+
+A TransportCompany class could be used as a superclass, with TrainCompany, BusCompany, and AirlineCompany
+being written as subclasses of the TransportCompany class.
+***this is an advantage because...?
+
+
+***18.b.i: Draw a diagram showing the dependencies between all of the classes described
+so far, including any introduced in part (a). You can assume that the Journey
+and Codes classes remain unchanged.
+
+
+
+
+***18.b.ii: Outline the reasons for keeping dependencies to a minimum. You should include
+an example using the classes described so far.
+
+
+
+
+Eastern : Average Delay = 2.5 minutes : Longest Delay = Newtown – Westlock Bay
+18.c: Construct the toString() method. You should make use of previously
+defined methods.
+
+public String toString(Codes[] c) {
+    return this.getCompanyName() + " : Average Delay = " + this.averageDelay() + " : Longest Delay = " + this.longestDelay(allCodes);
+}
+
+
+
+19. The programming team behind this system is considering making use of different
+data structures in order to improve efficiency.
+19.a: Outline one reason why the array declarations in the original program may lead
+to inefficiency.
+
+It is unlikely that the train company will need 100,000 Journeys or 10,000 Codes right away, but if the company
+operates for long enough, they may accumulate more than 100,000 Journeys or 10,000 Codes. In these situations,
+they will need to expand the array, by copying all the old data into a  new Journey[] with more spaces.
+
+
+
+***19.b: Currently the allCodes array is not structured for efficient searching. Describe how
+a different data structure can be both created and utilized so as to allow for the route
+name to be found more quickly.
+
+
+
+
+20: The programming team is considering whether to replace the journeyHistory array with
+an abstract data type (ADT) such as ArrayList or LinkedList.
+***20.a: Outline how a programmer is able to use methods of an ADT, such as an ArrayList or a
+LinkedList, without knowing how they are implemented.
+
+The programmer can consult the documentation.
+Something about abstraction? or the fact that they use common commands, like "push" or "append"?
+
+
+
+***20.b: Suggest why the team might choose to use an instance of the LinkedList library class,
+and not an ArrayList, to store the journeyHistory objects.
+
+
+
+
+***20.c: The allCodes array has some duplicated entries (some objects which are the same).
+The team has decided to copy to an ArrayList object all unique entries of the allCodes array.
+Construct the method convert() that will carry out this process. By inspecting the
+routeCode fields you should ensure that only unique objects are copied.
+
