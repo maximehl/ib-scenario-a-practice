@@ -40,12 +40,14 @@ public class TrainCompany {
 
     public double averageDelay() {
         double average = 0;
+        int numToAverage = 0;
         for(int n=0; n<this.numberOfJourneys; n++){
             if(!journeyHistory[n].getWeatherRelated()){
                 average+=journeyHistory[n].getDelay();
+                numToAverage++;
             }
         }
-        return average/this.numberOfJourneys;
+        return average/numToAverage;
     }
     // returns the average delay for all of a company’s journeys
 
@@ -56,19 +58,18 @@ public class TrainCompany {
             if(journeyHistory[n]==null){
                 break;
             }else{
-                if(journeyHistory[n].getDelay()>journeyHistory[longestDelayJourney].getDelay()){
+                if((!journeyHistory[n].getWeatherRelated())&&journeyHistory[n].getDelay()>journeyHistory[longestDelayJourney].getDelay()){
                     longestDelayJourney = n;
                 }
             }
         }
-
-        for(n=0; n<allCodes.length; n++){
-            if(allCodes[n].getRouteCode().equals(journeyHistory[n].getRouteCode())){
+        int i;
+        for(i=0; i<allCodes.length; i++) {
+            if (allCodes[i].getRouteCode().equals(journeyHistory[n].getRouteCode())) {
                 break;
             }
         }
-
-        return allCodes[n].getRouteName();
+        return allCodes[i].getRouteName();
     }
     // returns the route name for the journey with the longest delay
 

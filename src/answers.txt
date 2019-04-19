@@ -31,7 +31,7 @@ public Journey(int a, int b, boolean c){
 
 15.c: State the output after the above code is executed.
 
-"T290"
+T290
 10
 1
 
@@ -49,12 +49,14 @@ object has at least one journey.
 
 public double averageDelay() {
     double average = 0;
+    int numToAverage = 0;
     for(int n=0; n<this.numberOfJourneys; n++){
         if(!journeyHistory[n].getWeatherRelated()){
             average+=journeyHistory[n].getDelay();
+            numToAverage++;
         }
     }
-    return average/this.numberOfJourneys;
+    return average/numToAverage;
 }
 
 
@@ -79,26 +81,25 @@ Construct the method longestDelay(). You can assume that all route codes are
 present in allCodes[].
 
 public String longestDelay(Codes[] c) {
-    int n;
-    int longestDelayJourney = 0;
-    for(n=0; n<this.journeyHistory.length; n++){
-        if(journeyHistory[n]==null){
-            break;
-        }else{
-            if(journeyHistory[n].getDelay()>journeyHistory[longestDelayJourney].getDelay()){
-                longestDelayJourney = n;
+        int n;
+        int longestDelayJourney = 0;
+        for(n=0; n<this.journeyHistory.length; n++){
+            if(journeyHistory[n]==null){
+                break;
+            }else{
+                if((!journeyHistory[n].getWeatherRelated())&&journeyHistory[n].getDelay()>journeyHistory[longestDelayJourney].getDelay()){
+                    longestDelayJourney = n;
+                }
             }
         }
-    }
-
-    for(n=0; n<allCodes.length; n++){
-        if(allCodes[n].getRouteCode().equals(journeyHistory[n].getRouteCode())){
-            break;
+        int i;
+        for(i=0; i<allCodes.length; i++) {
+            if (allCodes[i].getRouteCode().equals(journeyHistory[n].getRouteCode())) {
+                break;
+            }
         }
+        return allCodes[i].getRouteName();
     }
-
-    return allCodes[n].getRouteName();
-}
 
 
 
@@ -109,12 +110,19 @@ these forms of transport.
 
 A TransportCompany class could be used as a superclass, with TrainCompany, BusCompany, and AirlineCompany
 being written as subclasses of the TransportCompany class.
-***this is an advantage because...?
+TransportCompany would have features such as companyCodes and journeyHistory, while subclasses would have
+features specific to that type of travel.
+
 
 
 ***18.b.i: Draw a diagram showing the dependencies between all of the classes described
 so far, including any introduced in part (a). You can assume that the Journey
 and Codes classes remain unchanged.
+
+TransportCompany
+TrainCompany --> TransportCompany
+BusCompany --> TransportCompany
+AirlineCompany --> TransportCompany
 
 
 
